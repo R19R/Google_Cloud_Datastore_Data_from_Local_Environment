@@ -1,0 +1,65 @@
+body{
+    margin: 0% 15%;
+    box-shadow: black;
+}
+
+#heading{
+    display: block;
+    text-align: center;
+}
+
+#login{
+    display: block;
+    align-content: left;
+    margin: 0% 5%;
+    /* border: 2px solid red; */
+    width: 40%;
+}
+#login h3{
+    text-align: center;
+}
+
+#login p, #login input{
+    text-align: center;
+}
+
+button{
+    align-content: center;
+}
+
+#register{
+    display: block;
+    margin: 0% 5%;
+    /* border: 2px solid blue; */
+    width: 40%;
+    margin-top: -220px;
+    margin-left: 525px;
+}
+#register h3, #register p, #reigster input{
+    text-align: center;
+}
+#reg_msg_css{
+    display: none;
+}
+#comments{
+    display: none;
+    /* border: 2px solid red; */
+    color: black;
+    width: 100%;
+    height: 200 px;
+}
+
+#button_login, #button_register{
+    width: 40%;
+    margin-left: 40%;
+}
+
+#table{
+    display: none;
+}
+#msg{
+    display: none;
+    color: red;
+    font-size: 14px;
+    width: fit-content;
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/file.css')}}">
+</head>
+<body>
+
+    <div id="login">
+        <form>
+            <h3>Existing User</h3>
+            <p>Username<br>
+                <input type="text" name="uname" id="uname">
+            </p>
+            <p>
+                Password <br>
+                <input type="password" name="pword" id="pword">
+
+            </p>
+        </form>
+            <div id="button_login">
+            <button id='btn'>Login</button>
+            </div>
+            <br>
+            <div id="msg">
+            <p id="flash"></p>
+            </div>
+    </div>
+
+    <div id="register">
+        <form>
+            <h3>New User</h3>
+            <p>
+                Username <br>
+                <input type="text" name="new_username" id="new_user_name">
+            </p>
+            <p>
+                Password <br>
+                <input type="password" name="new_pword" id="new_user_pword">
+            </p>
+            <p>
+                Confirm Password <br>
+                <input type="password" name="confirm_pword" id="new_user_confirm_pword">
+            </p>
+            <div id="reg_msg_css">
+            <p id="reg_msg"></p>
+            </div>
+            <div id="button_register">
+                <button type="submit" id="btn_new_user">Register</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div id="comments">
+        <h2>Welcome</h2>
+        
+        <form>
+            <p>Name <input type="text" id="name_detail" name='name'></p>
+            <p>Comments <input type="text" id="comments_detail" name='comment'></p>
+            
+            <button type="submit" id="btn1">submit</button>
+        </form>
+        <table id="table">
+            <tr>
+                <td>UID</td>
+                <td>Name</td>
+                <td>Comments</td>
+            </tr>
+        </table>
+        <a href="/logout">Logout</a>
+    </div>
+
+   <script src="{{url_for('static', filename='js/comments.js')}}"></script>
+
+</body>
+</html>
