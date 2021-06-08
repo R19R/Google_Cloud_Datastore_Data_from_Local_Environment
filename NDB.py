@@ -1,5 +1,8 @@
 from flask import Flask, json, redirect, render_template, request, jsonify, session, flash
 from flask_login.utils import confirm_login
+from google.cloud.datastore_v1.proto.entity_pb2 import ArrayValue
+from google.cloud.ndb import key
+from google.cloud.ndb.model import Key, User
 from models import User_Details, db, load_user, login
 from flask_login import login_required, current_user, login_user, logout_user
 import uuid, csv, os.path
@@ -7,7 +10,7 @@ from google.cloud import datastore, ndb
 
 
 
-credentials_path = "F:\Google Cloud\LocalDevelopment.json"
+credentials_path = "F:\Google Cloud\Service_datastore.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credentials_path
 
 
@@ -16,6 +19,7 @@ db = ndb.Client()
 
 app=Flask(__name__)
 
+app.config['SECRET_KEY']='xyz'
 
 @app.route('/')
 def home():
@@ -24,23 +28,21 @@ def home():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
-        log = request.get_json(force=True)
-        uname = log.get('name')
-        pword = log.get('password')
-        session['user'] = uname
-        with db.context():
-            ancestor_key = ndb.Key("User", "user_name")
-            user = User_Details.query(ancestor=ancestor_key,username=uname).fetch(1)
-            print(user)
-        if user == None:
-            return "No User"
-        elif user is not None and user.check_password(pword):
-            login_user(user)
-            return "Login successful!"
-        else:
-            return "Wrong Credentials"
-    return redirect("/")
+    with db.context():
+        if request.method == "POST":
+            log = request.get_json(force=True)
+            uname = log.get('name')
+            pword = log.get('password')
+            session['user'] = uname
+            key = ndb.Key(User_Details, uname)
+            user_login = User_Details.get_by_id(uname)
+            if user_login.username == None:
+                return "No User"
+            elif user_login.username is not None and (user_login.password == pword):
+                return "Login successful!"
+            else:
+                return "Wrong Credentials"
+        return redirect("/")
 
 
 @app.route("/newuser", methods=['GET', 'POST'])
@@ -52,10 +54,12 @@ def newuser():
             password = new_user.get('password')
             con_password = new_user.get('confirm_pword')
             filename = "newfile_"+ username + ".csv"
-            user = User_Details(username=username, filename=filename, password=password)
+            # id = "id_"+ username
+            print(username, password, filename)
+            user = User_Details(id=username,username=username, filename=filename, password=password)
             user.set_password(password)
             with open(filename, 'a') as wfile:
-                    writer = csv.writer(wfile, lineterminator = '\n')
+                writer = csv.writer(wfile, lineterminator = '\n')
             user.put()    
             return "User Created!"
         return "Method is GET"

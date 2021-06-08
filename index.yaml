@@ -1,0 +1,7 @@
+indexes:
+
+- kind: User_Details
+  properites:
+  - name: username
+    direction: desc
+    
